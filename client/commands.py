@@ -80,3 +80,8 @@ Command.register_new(aliases=('get', 'queue'),
                      data='g',
                      argument_usage='',
                      description='Retrieves the current contents of the queue')
+
+Command.register_new(aliases=('current', 'playing', 'now'),
+                     data='c',
+                     argument_usage='',
+                     description='Retrieves the uri of the currently playing track')

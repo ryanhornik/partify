@@ -5,7 +5,8 @@ import threading
 import socket
 from collections import Counter
 from server.server_config import PORT
-from server.commands import Command, process_quit, process_add, process_next, process_playpause, process_get_queue
+from server.commands import Command, process_quit, process_add, process_next, process_playpause, \
+    process_get_queue, process_get_current_track
 from server.thread_types import MusicPlayerThread, add_song_when_nearly_empty, drain_queue
 
 
@@ -40,6 +41,7 @@ class Server(object):
         Command.register_new('a', process_add)
         Command.register_new('q', process_quit)
         Command.register_new('g', process_get_queue)
+        Command.register_new('c', process_get_current_track)
 
     def get_all_users_songs(self):
         users_songs = []

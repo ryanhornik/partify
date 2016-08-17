@@ -13,3 +13,7 @@ def pause_song():
 
 def resume_song():
     execute_spotify_command('play')
+
+
+def current_track():
+    return execute_spotify_command('return id of current track')

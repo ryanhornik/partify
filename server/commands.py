@@ -1,6 +1,7 @@
 import time
 import spotipy
 import json
+from server.spotify_apple_script import current_track
 from server.thread_types import MusicPlayerThread, drain_queue, resume_song_then_wait
 
 
@@ -76,3 +77,7 @@ def process_quit(server_context, args):
 
 def process_get_queue(server_context, args):
     return bytes(json.dumps(server_context.song_queue), "UTF-8")
+
+
+def process_get_current_track(server_context, args):
+    return current_track().strip()
