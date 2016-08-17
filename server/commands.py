@@ -29,7 +29,7 @@ class Command(object):
 def process_playpause(server_context, args):
     if not server_context.queue_draining_thread.is_alive() or server_context.queue_draining_thread.paused():
         server_context.queue_draining_thread = MusicPlayerThread(target=resume_song_then_wait,
-                                                                 args=(server_context.song_queue,),
+                                                                 args=(server_context,),
                                                                  daemon=True)
         server_context.queue_draining_thread.start()
         message = "Playing"
@@ -45,7 +45,7 @@ def process_next(server_context, args):
         server_context.queue_draining_thread.pause()
         server_context.queue_draining_thread.join()
     server_context.queue_draining_thread = MusicPlayerThread(target=drain_queue,
-                                                             args=(server_context.song_queue,),
+                                                             args=(server_context,),
                                                              daemon=True)
     server_context.queue_draining_thread.start()
     time.sleep(0.1)
@@ -56,11 +56,12 @@ def process_add(server_context, args):
     try:
         song_id = args.split()[1]
         song = server_context.client.track(song_id)
-        server_context.song_queue.append(song)
+        server_context.song_queue.update((song["uri"],))
     except spotipy.SpotifyException:
         message = "Invalid identifier entered for song id"
     else:
         message = "Enqueued {}".format(song['name'])
+        print(server_context.song_queue)
     return bytes(message, "UTF-8")
 
 

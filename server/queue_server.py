@@ -2,8 +2,8 @@ import spotipy
 from spotipy import util
 import time
 import threading
-from collections import deque
 import socket
+from collections import Counter
 from server.server_config import PORT
 from server.commands import Command, process_quit, process_add, process_next, process_playpause
 from server.thread_types import MusicPlayerThread, add_song_when_nearly_empty, drain_queue
@@ -11,7 +11,7 @@ from server.thread_types import MusicPlayerThread, add_song_when_nearly_empty, d
 
 def add_tracks(tracks, song_list):
     for item in tracks['items']:
-        song_list.append(item["track"])
+        song_list.append(item["track"]["uri"])
 
 
 class Server(object):
@@ -29,7 +29,7 @@ class Server(object):
 
         self.queue_draining_thread = None
 
-        self.song_queue = deque()
+        self.song_queue = Counter()
         self.all_songs = self.get_all_users_songs()
         self.running = False
 
@@ -52,7 +52,7 @@ class Server(object):
     def start(self):
         threading.Thread(target=add_song_when_nearly_empty, args=(self.song_queue, self.all_songs), daemon=True).start()
 
-        self.queue_draining_thread = MusicPlayerThread(target=drain_queue, args=(self.song_queue,), daemon=True)
+        self.queue_draining_thread = MusicPlayerThread(target=drain_queue, args=(self,), daemon=True)
         self.queue_draining_thread.start()
 
         time.sleep(0.1)
