@@ -1,5 +1,6 @@
 import time
 import spotipy
+import json
 from server.thread_types import MusicPlayerThread, drain_queue, resume_song_then_wait
 
 
@@ -71,3 +72,7 @@ def process_quit(server_context, args):
         server_context.queue_draining_thread.join()
     server_context.stop()
     return bytes("Shutting down server", "UTF-8")
+
+
+def process_get_queue(server_context, args):
+    return bytes(json.dumps(server_context.song_queue), "UTF-8")

@@ -75,3 +75,8 @@ Command.register_new(aliases=('quit', 'exit', 'x'),
                      data='q',
                      argument_usage='',
                      description='Stops the server and ends playback.')
+
+Command.register_new(aliases=('get', 'queue'),
+                     data='g',
+                     argument_usage='',
+                     description='Retrieves the current contents of the queue')
