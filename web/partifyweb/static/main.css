@@ -1,0 +1,33 @@
+body {
+    background-color: #333;
+    color: #AAA;
+}
+
+#song-info {
+    display: block;
+    width: 40%;
+    background-color: #222;
+    margin: auto;
+    padding: 0 0 10px 0;
+    border: 0.25em #111 outset;
+}
+
+#album-artwork {
+    display: block;
+    width: 100%;
+    margin: 0;
+}
+
+#album-title {
+    display: none;
+}
+
+#song-title {
+    margin: 10px 0 0 10px;
+    overflow: scroll;
+}
+
+#artists {
+    margin: 10px 0 0 10px;
+    overflow: scroll;
+}

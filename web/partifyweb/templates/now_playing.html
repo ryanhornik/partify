@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+<div id="song-info">
+    <div id="album">
+        <img id="album-artwork" src="{{ track.album.images.0.url }}"/>
+        <span id="album-title">{{ track.album.name }}</span>
+    </div>
+    <h1 id="song-title">
+        {{ track.name }}
+    </h1>
+    <div id="artists">
+        {% for artist in track.artists %}
+            {% if forloop.counter < track.artists|length %}
+                {{ artist.name }},
+            {% else %}
+                {{ artist.name }}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>
